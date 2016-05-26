@@ -1,0 +1,7 @@
+1, Swathi, 23, false
+2, Sai, 26, true
+3, Kumar, 51, true
+
+1, SIBLING, 2
+1, CHILD, 3
+2, CHILD, 3

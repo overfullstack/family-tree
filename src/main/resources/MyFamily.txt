@@ -1,0 +1,20 @@
+1, Swathi, 23, false
+2, Sai, 26, true
+3, Kumar, 51, true
+4, Radha, 49, false
+5, Prasuna, 75, false
+6, Pranavi, 1, false
+7, Lakshmi, 108, false
+8, Harsha, 28, true
+9, Padma, 55, false
+10, Srinu, 35, true
+
+1, SIBLING, 2
+1, CHILD, 3
+1, CHILD, 4
+1, PARENT, 6
+1, GRANDCHILD, 5
+7, PARENT, 5
+8, HUSBAND, 1
+9, SISTER, 3
+10, SON, 9
