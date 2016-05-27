@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import graph.ConnectionEdge;
 import graph.FamilyGraph;
 import graph.Person;
+import lombok.Cleanup;
 import relationship.IRelation;
 
 import java.io.OutputStream;
@@ -16,12 +17,8 @@ import static utils.RelationUtils.parseToRelation;
  * Class which holds all Print related methods of the graph.
  */
 public class ConsolePrintService implements PrintService {
-    private final PrintStream out;
-
     @Inject
-    public ConsolePrintService(OutputStream out) {
-        this.out = new PrintStream(out);
-    }
+    private OutputStream out;
 
     @Override
     public void printFamilyTree(String pId, FamilyGraph family) {
@@ -37,9 +34,10 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printAggregateRelation(String p1Id, String p2Id, FamilyGraph family) {
+        @Cleanup PrintStream printOut = new PrintStream(out);
         Person p1 = family.getPersonById(p1Id);
         Person p2 = family.getPersonById(p2Id);
-        out.println(family.getAggregateConnection(p1, p2));
+        printOut.println(family.getAggregateConnection(p1, p2));
     }
 
     @Override
@@ -48,11 +46,12 @@ public class ConsolePrintService implements PrintService {
     }
 
     private void printConnections(Collection<ConnectionEdge> connections) {
+        @Cleanup PrintStream printOut = new PrintStream(out);
         StringBuilder str = new StringBuilder();
         for (ConnectionEdge edge : connections) {
             str.append(edge).append("\n");
         }
-        out.println(str);
+        printOut.println(str);
     }
 
     @Override
@@ -88,18 +87,20 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printPersonsRelatedWithRelation(String relation, int relationLevel, FamilyGraph family) {
+        @Cleanup PrintStream printOut = new PrintStream(out);
         for (Person person : family.getAllPersonsInFamily()) {
             if (family.isPersonRelatedWithRelation(person, parseToRelation(relation), relationLevel)) {
-                out.println(person);
+                printOut.println(person);
             }
         }
     }
 
     private void printPersons(Collection<Person> persons) {
+        @Cleanup PrintStream printOut = new PrintStream(out);
         StringBuilder str = new StringBuilder();
         for (Person p : persons) {
             str.append(p).append("\n");
         }
-        out.print(str);
+        printOut.print(str);
     }
 }

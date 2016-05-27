@@ -1,42 +1,27 @@
 package graph;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+
 /**
  * Class to represent Person.
  */
+@AllArgsConstructor
 public final class Person {
+    @NonNull
+    @Getter
     private final String id;
+    @NonNull
+    @Getter
     private final String name;
+    @Getter
     private final int age;
+    @Getter
     private final boolean isGenderMale; // Male-true, Female-false
 
-    public Person(String id, String name, int age, boolean isGenderMale) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.isGenderMale = isGenderMale;
-    }
-
     public Person(String id, String name, String age, String isGenderMale) {
-        this.id = id;
-        this.name = name;
-        this.age = Integer.valueOf(age);
-        this.isGenderMale = Boolean.valueOf(isGenderMale);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public boolean isGenderMale() {
-        return isGenderMale;
+        this(id, name, Integer.valueOf(age), Boolean.valueOf(isGenderMale));
     }
 
     /* No setters to achieve Immutability */

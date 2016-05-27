@@ -1,5 +1,7 @@
 package relationship;
 
+import lombok.Getter;
+
 /**
  * Class representing Generic Relations
  */
@@ -225,10 +227,15 @@ public enum GenericRelation implements IGenericRelation {
         SPOUSE.alternateRelation = SPOUSE;
     }
 
-    private final ISpecificRelation maleRelation;
-    private final ISpecificRelation femaleRelation;
+    @Getter
     private final int relationLevel;
+    @Getter
+    private final ISpecificRelation maleRelation;
+    @Getter
+    private final ISpecificRelation femaleRelation;
+    @Getter
     private IGenericRelation reverseRelation;
+    @Getter
     private IGenericRelation alternateRelation;
 
     GenericRelation(int relationLevel, ISpecificRelation maleRelation, ISpecificRelation femaleRelation) {
@@ -247,33 +254,7 @@ public enum GenericRelation implements IGenericRelation {
     }
 
     @Override
-    public ISpecificRelation getFemaleRelation() {
-        return this.femaleRelation;
-    }
-
-    @Override
-    public ISpecificRelation getMaleRelation() {
-        return this.maleRelation;
-    }
-
-    @Override
     public ISpecificRelation getGenderSpecificRelation(boolean isMale) {
         return isMale ? this.maleRelation : this.femaleRelation;
     }
-
-    @Override
-    public IGenericRelation getReverseRelation() {
-        return this.reverseRelation;
-    }
-
-    @Override
-    public IGenericRelation getAlternateRelation() {
-        return this.alternateRelation;
-    }
-
-    @Override
-    public int getRelationLevel() {
-        return relationLevel;
-    }
-
 }

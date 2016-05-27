@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Class to test FileLoaderService
  */
-public class FileLoaderServiceTest {
+public class FileLoaderServiceTest { 
     @Inject
     private static FamilyGraph family;
     @Inject

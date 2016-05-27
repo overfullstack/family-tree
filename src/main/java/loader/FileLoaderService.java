@@ -2,11 +2,11 @@ package loader;
 
 import com.google.inject.Inject;
 import graph.FamilyGraph;
+import lombok.Cleanup;
 
 import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -15,16 +15,13 @@ import java.io.Reader;
  * Class to load Family from file.
  */
 public class FileLoaderService implements LoaderService {
-
-    private final Reader reader;
-
     @Inject
-    public FileLoaderService(@Named("family-file") String familyFile) throws FileNotFoundException {
-        this.reader = new BufferedReader(new FileReader(new File(familyFile)));
-    }
-
+    @Named("family-file")
+    private String familyFile;
+    
     @Override
     public void loadFamily(FamilyGraph family) throws IOException {
+        @Cleanup Reader reader = new BufferedReader(new FileReader(new File(familyFile)));
         load(family, (BufferedReader) reader, true);
         load(family, (BufferedReader) reader, false);
     }

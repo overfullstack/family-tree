@@ -1,6 +1,8 @@
 package graph;
 
 import com.google.inject.Inject;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import relationship.GenericRelation;
 import relationship.IGenericRelation;
 import relationship.IRelation;
@@ -29,22 +31,12 @@ import static utils.RelationUtils.parseToGenericRelation;
 /**
  * This is the central Data Structure that holds all the Persons in the family and their corresponding connections.
  */
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class FamilyGraph {
-    private final Map<String, Person> mPersonIdMap; // Represents all the persons put into the graph.
-    private final Map<Person, Set<ConnectionEdge>> mRelationMap;
+    private final Map<String, Person> mPersonIdMap = new HashMap<>(); // Represents all the persons put into the graph.
+    private final Map<Person, Set<ConnectionEdge>> mRelationMap = new HashMap<>();
+    @NonNull
     private final IValidator validator;
-
-    /**
-     * Constructor
-     *
-     * @param validator IValidator used to validate relations
-     */
-    @Inject
-    public FamilyGraph(IValidator validator) {
-        this.validator = validator;
-        mPersonIdMap = new HashMap<>();
-        mRelationMap = new HashMap<>();
-    }
 
     /**
      * Returns all the neighbour direct relations of a persons
@@ -146,7 +138,7 @@ public class FamilyGraph {
             Person to = connection.to();
             if (!arePersonsDirectlyConnected(from, to)) {
                 // No need of validation as the connections are already validated while initially connecting.
-                connectPersons(from, connection.relation(), to, connection.getRelationLevel(), false);
+                connectPersons(from, connection.relation(), to, connection.relationLevel(), false);
             }
         }
     }
@@ -274,7 +266,7 @@ public class FamilyGraph {
                         currentRelation = edge.relation();
                         nextRelation = currentRelation.getNextGenericRelation(previousConnection.relation());
                         previousConnection = new ConnectionEdge(p1, nextRelation, neighbourRelative,
-                                previousConnection.getRelationLevel() + currentRelation.getRelationLevel());
+                                previousConnection.relationLevel() + currentRelation.getRelationLevel());
                     }
 
                     if (p2 == null) { // For getFamilyGraphForPerson
@@ -367,7 +359,7 @@ public class FamilyGraph {
             } else {
                 aggregateRelation = aggregateRelation.getNextGenericRelation(nextRelation);
                 aggregateConnection = new ConnectionEdge(nextPerson, aggregateRelation, p2, nextRelation
-                        .getRelationLevel() + aggregateConnection.getRelationLevel());
+                        .getRelationLevel() + aggregateConnection.relationLevel());
             }
             if (connections != null) {
                 connections.add(nextEdge);
@@ -462,7 +454,7 @@ public class FamilyGraph {
         if (isRelationMale != null && person.isGenderMale() != isRelationMale) return false;
         for (ConnectionEdge connection : allConnections) {
             // Need to check relations in reverse, so taking inverse of generationLevel
-            if (connection.getRelationLevel() == relationLevel
+            if (connection.relationLevel() == relationLevel
                     && connection.relation().equals(genericRelation)) {
                 return true;
             }

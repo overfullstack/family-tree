@@ -1,8 +1,14 @@
 package relationship;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 /**
  * Class representing Specific relations
  */
+@RequiredArgsConstructor
 public enum SpecificRelation implements ISpecificRelation {
     HUSBAND(true),
     WIFE(false),
@@ -30,25 +36,11 @@ public enum SpecificRelation implements ISpecificRelation {
 
     COUSIN(null);
 
+    @Getter
+    @Accessors(fluent = true)
     private final Boolean isRelationMale;
-    private relationship.IGenericRelation IGenericRelation;
 
-    SpecificRelation(Boolean isRelationMale) {
-        this.isRelationMale = isRelationMale;
-    }
-
-    @Override
-    public Boolean isRelationMale() {
-        return isRelationMale;
-    }
-
-    @Override
-    public relationship.IGenericRelation getGenericRelation() {
-        return this.IGenericRelation;
-    }
-
-    @Override
-    public void setGenericRelation(relationship.IGenericRelation IGenericRelation) {
-        this.IGenericRelation = IGenericRelation;
-    }
+    @Getter
+    @Setter
+    private IGenericRelation genericRelation;
 }

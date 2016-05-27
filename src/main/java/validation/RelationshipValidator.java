@@ -30,13 +30,13 @@ public class RelationshipValidator implements IValidator {
             boolean isRelationLevelValid;
             switch ((GenericRelation) genericRelation) {
                 case GRANDPARENT:
-                    isRelationLevelValid = relationLevel >= possibleConnection.getRelationLevel();
+                    isRelationLevelValid = relationLevel >= possibleConnection.relationLevel();
                     break;
                 case GRANDCHILD:
-                    isRelationLevelValid = relationLevel <= possibleConnection.getRelationLevel();
+                    isRelationLevelValid = relationLevel <= possibleConnection.relationLevel();
                     break;
                 default:
-                    isRelationLevelValid = relationLevel == possibleConnection.getRelationLevel();
+                    isRelationLevelValid = relationLevel == possibleConnection.relationLevel();
             }
             isValid = isRelationLevelValid &&
                     (genericRelation.equals(possibleConnection.relation())

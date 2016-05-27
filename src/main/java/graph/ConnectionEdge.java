@@ -1,5 +1,9 @@
 package graph;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.Accessors;
 import relationship.IGenericRelation;
 import relationship.ISpecificRelation;
 
@@ -8,16 +12,23 @@ import static utils.RelationUtils.parseToGenericRelation;
 /**
  * Class representing Connection between persons
  */
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Accessors(fluent = true)
 public final class ConnectionEdge {
-    private final Person from, to;
+    @NonNull
+    @Getter
+    private final Person from;
+    @NonNull
+    @Getter
     private final IGenericRelation relation;
+    @NonNull
+    @Getter
+    private final Person to;
+    @Getter
     private int relationLevel;
 
     public ConnectionEdge(Person from, IGenericRelation relation, Person to) {
-        this.from = from;
-        this.to = to;
-        this.relation = relation;
-        this.relationLevel = relation.getRelationLevel();
+        this(from, relation, to, relation.getRelationLevel());
     }
 
     public ConnectionEdge(Person from, ISpecificRelation relation, Person to) {
@@ -34,35 +45,8 @@ public final class ConnectionEdge {
      * @param family
      */
     public ConnectionEdge(String fromPid, String relation, String toPid, int relationLevel, FamilyGraph family) {
-        this.from = family.getPersonById(fromPid);
-        this.to = family.getPersonById(toPid);
-        this.relation = parseToGenericRelation(relation);
-        this.relationLevel = relationLevel;
-    }
-
-    public ConnectionEdge(Person from, IGenericRelation relation, Person to, int relationLevel) {
-        this(from, relation, to);
-        this.relationLevel = relationLevel;
-    }
-
-    public Person from() {
-        return this.from;
-    }
-
-    public Person to() {
-        return this.to;
-    }
-
-    public IGenericRelation relation() {
-        return this.relation;
-    }
-
-    public int getRelationLevel() {
-        return this.relationLevel;
-    }
-
-    public void setRelationLevel(int relationLevel) {
-        this.relationLevel = relationLevel;
+        this(family.getPersonById(fromPid), parseToGenericRelation(relation), family.getPersonById(toPid),
+                relationLevel);
     }
 
     @Override

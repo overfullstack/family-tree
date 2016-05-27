@@ -14,14 +14,12 @@ import java.util.Scanner;
  * Client to make use of features of this software
  */
 public class FamilyNetworkClient {
-
     @Inject
     private static FamilyGraph family;
     @Inject
     private static PrintService printer;
     @Inject
     private static LoaderService loader;
-
 
     public static void main(String[] args) throws IOException {
         Guice.createInjector(new FamilyModule());
