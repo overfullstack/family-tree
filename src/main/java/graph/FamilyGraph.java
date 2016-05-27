@@ -1,5 +1,6 @@
 package graph;
 
+import com.google.inject.Inject;
 import relationship.GenericRelation;
 import relationship.IGenericRelation;
 import relationship.IRelation;
@@ -38,6 +39,7 @@ public class FamilyGraph {
      *
      * @param validator IValidator used to validate relations
      */
+    @Inject
     public FamilyGraph(IValidator validator) {
         this.validator = validator;
         mPersonIdMap = new HashMap<>();
@@ -62,7 +64,7 @@ public class FamilyGraph {
     public void addPerson(Person person) {
         if (!mRelationMap.containsKey(person)) {
             mPersonIdMap.put(person.getId(), person);
-            mRelationMap.put(person, new HashSet<ConnectionEdge>());
+            mRelationMap.put(person, new HashSet<>());
         }
     }
 
@@ -384,12 +386,9 @@ public class FamilyGraph {
     }
 
     public Collection<Person> getFamilyInOrderOfAge(boolean isOrderAscending) {
-        Comparator<Person> ascendingAgeComparator = new Comparator<Person>() {
-            @Override
-            public int compare(Person p1, Person p2) {
-                if (p1.getAge() == p2.getAge()) return 0;
-                return (p1.getAge() > p2.getAge()) ? 1 : -1;
-            }
+        Comparator<Person> ascendingAgeComparator = (p1, p2) -> {
+            if (p1.getAge() == p2.getAge()) return 0;
+            return (p1.getAge() > p2.getAge()) ? 1 : -1;
         };
         List<Person> sortedPersons = new ArrayList(mPersonIdMap.values());
         if (isOrderAscending) {

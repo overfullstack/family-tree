@@ -1,5 +1,6 @@
 package printer;
 
+import com.google.inject.Inject;
 import graph.ConnectionEdge;
 import graph.FamilyGraph;
 import graph.Person;
@@ -17,6 +18,7 @@ import static utils.RelationUtils.parseToRelation;
 public class ConsolePrintService implements PrintService {
     private final PrintStream out;
 
+    @Inject
     public ConsolePrintService(OutputStream out) {
         this.out = new PrintStream(out);
     }

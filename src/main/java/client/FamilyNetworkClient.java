@@ -1,16 +1,12 @@
-import graph.FamilyGraph;
-import loader.FileLoaderService;
-import loader.LoaderService;
-import printer.ConsolePrintService;
-import printer.PrintService;
-import validation.AgeValidator;
-import validation.GenderValidator;
-import validation.IValidator;
-import validation.RelationshipValidator;
+package client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import graph.FamilyGraph;
+import loader.LoaderService;
+import modules.FamilyModule;
+import printer.PrintService;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -19,24 +15,18 @@ import java.util.Scanner;
  */
 public class FamilyNetworkClient {
 
-    private static final FamilyGraph family;
-    private static final PrintService printer;
-    private static final IValidator validator;
+    @Inject
+    private static FamilyGraph family;
+    @Inject
+    private static PrintService printer;
+    @Inject
     private static LoaderService loader;
 
-    static {
-        validator = setUpValidator();
-        family = new FamilyGraph(validator);
-        printer = new ConsolePrintService(System.out);
-        try {
-            loader = new FileLoaderService(new BufferedReader(new FileReader(new File("src//main//resources//MyFamily.txt"))));
-            loader.loadFamily(family);
-        } catch (IOException e) {
-            System.out.println("Exception while loading family from file: " + e.getMessage());
-        }
-    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Guice.createInjector(new FamilyModule());
+        loader.loadFamily(family);
+        
         Scanner scn = new Scanner(System.in);
         System.out.println("Select option to Display: ");
         System.out.println("1. Family Tree\n2. Shortest Relation Chain\n3. Members from Generation Level\n" +
@@ -161,17 +151,6 @@ public class FamilyNetworkClient {
         String pId = scn.next();
         printer.printFamilyTree(pId, family);
         pause();
-    }
-
-    private static IValidator setUpValidator() {
-        IValidator genderValidator = new GenderValidator();
-        IValidator ageValidator = new AgeValidator();
-        IValidator relationShipValidator = new RelationshipValidator();
-
-        genderValidator.setNextValidatorInChain(ageValidator);
-        ageValidator.setNextValidatorInChain(relationShipValidator);
-
-        return genderValidator;
     }
 
     private static void pause() {
