@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="NoGradle" pattern="!file[family-tree]:settings.gradle&amp;&amp;!file[family-tree]:build.gradle" />
+</component>

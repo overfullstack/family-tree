@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="myName" value="Gopal S Akshintala" />
+    <option name="notice" value="Copyright (c)#if(&amp;#36;today.year==2016) 2016#else &amp;#36;today.year - Present#end, Gopal S Akshintala&#10;This source code is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.&#10;http://creativecommons.org/licenses/by-sa/4.0/" />
+  </copyright>
+</component>

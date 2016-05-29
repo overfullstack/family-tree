@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="Gopal S Akshintala">
+    <module2copyright>
+      <element module="NoGradle" copyright="Gopal S Akshintala" />
+    </module2copyright>
+  </settings>
 </component>
