@@ -28,7 +28,7 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printFamilyTree(String pId, FamilyGraph family) {
-        printConnections(family.getFamilyGraphForPerson(family.getPersonById(pId)));
+        printConnections(family.getFamilyGraphForPerson(family.getPersonById(pId), false));
     }
 
     @Override
@@ -53,11 +53,7 @@ public class ConsolePrintService implements PrintService {
 
     private void printConnections(Collection<ConnectionEdge> connections) {
         @Cleanup PrintStream printOut = new PrintStream(out);
-        StringBuilder str = new StringBuilder();
-        for (ConnectionEdge edge : connections) {
-            str.append(edge).append("\n");
-        }
-        printOut.println(str);
+        connections.forEach(printOut::println);
     }
 
     @Override
@@ -94,19 +90,12 @@ public class ConsolePrintService implements PrintService {
     @Override
     public void printPersonsRelatedWithRelation(String relation, int relationLevel, FamilyGraph family) {
         @Cleanup PrintStream printOut = new PrintStream(out);
-        for (Person person : family.getAllPersonsInFamily()) {
-            if (family.isPersonRelatedWithRelation(person, parseToRelation(relation), relationLevel)) {
-                printOut.println(person);
-            }
-        }
+        family.getAllPersonsInFamily().stream().filter(person -> family.isPersonRelatedWithRelation(person,
+                parseToRelation(relation), relationLevel)).forEach(printOut::println);
     }
 
     private void printPersons(Collection<Person> persons) {
         @Cleanup PrintStream printOut = new PrintStream(out);
-        StringBuilder str = new StringBuilder();
-        for (Person p : persons) {
-            str.append(p).append("\n");
-        }
-        printOut.print(str);
+        persons.forEach(printOut::println);
     }
 }

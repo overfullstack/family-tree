@@ -15,6 +15,7 @@
 - Lombok - to auto-generate boiler plate code
 - Google Guice - For Dependency Injection
 - Gradle - For Build
+- Java 8
 
 ### Design Decisions
 - Family is represented as a Directed graph, with Persons as Nodes and Relations as Edges.

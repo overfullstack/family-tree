@@ -76,8 +76,8 @@ public class FamilyGraphTest extends SoftwareTest {
     @Test
     public void getConnection() {
         Person origin = family.getPersonById("1");
-
         List<ConnectionEdge> expectedConnections = new ArrayList<>();
+
         expectedConnections.add(new ConnectionEdge("1", "SISTER", "2", 0, family));
         expectedConnections.add(new ConnectionEdge("1", "DAUGHTER", "3", -1, family));
         expectedConnections.add(new ConnectionEdge("1", "DAUGHTER", "4", -1, family));
@@ -88,12 +88,9 @@ public class FamilyGraphTest extends SoftwareTest {
         expectedConnections.add(new ConnectionEdge("1", "NIECE", "9", -1, family));
         expectedConnections.add(new ConnectionEdge("1", "COUSIN", "10", 0, family));
 
-        for (Person person : family.getAllPersonsInFamily()) {
-            if (!person.equals(origin)) {
-                Assert.assertEquals(expectedConnections.get(Integer.valueOf(person.getId()) - 2), family.getConnection
-                        (origin, person));
-            }
-        }
+        family.getAllPersonsInFamily().stream().filter(person -> !person.equals(origin)).forEach(person -> Assert
+                .assertEquals(expectedConnections.get(Integer.valueOf(person.getId()) - 2), family.getConnection
+                        (origin, person, false)));
     }
 
     @Test
@@ -169,9 +166,9 @@ public class FamilyGraphTest extends SoftwareTest {
     @Test
     public void getFamilyGraphForPerson() {
         Person origin = family.getPersonById("1");
-        for (ConnectionEdge connection : family.getFamilyGraphForPerson(origin)) {
+        for (ConnectionEdge connection : family.getFamilyGraphForPerson(origin, false)) {
             // Since getConnection is already tested, it can be relied on to test getFamilyGraphForPerson
-            Assert.assertEquals(family.getConnection(connection.from(), connection.to()), connection);
+            Assert.assertEquals(family.getConnection(connection.from(), connection.to(), false), connection);
         }
     }
 
