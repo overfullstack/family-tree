@@ -6,7 +6,7 @@
 
 package loader;
 
-import graph.FamilyGraph;
+import coreGraph.FamilyGraph;
 
 import java.io.IOException;
 

@@ -6,8 +6,8 @@
 
 package validation;
 
-import graph.FamilyGraph;
-import graph.Person;
+import coreGraph.FamilyGraph;
+import coreGraph.Person;
 import relationship.GenericRelation;
 import relationship.IGenericRelation;
 import relationship.ISpecificRelation;

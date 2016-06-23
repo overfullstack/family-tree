@@ -7,9 +7,8 @@
 package printer;
 
 import com.google.inject.Inject;
-import graph.ConnectionEdge;
-import graph.FamilyGraph;
-import graph.Person;
+import coreGraph.FamilyGraph;
+import coreGraph.Person;
 import lombok.Cleanup;
 import relationship.IRelation;
 
@@ -28,14 +27,14 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printFamilyTree(String pId, FamilyGraph family) {
-        printConnections(family.getFamilyGraphForPerson(family.getPersonById(pId), false));
+        printCollection(family.getFamilyGraphForPerson(family.getPersonById(pId), false));
     }
 
     @Override
     public void printShortestRelationChain(String p1Id, String p2Id, FamilyGraph family) {
         Person p1 = family.getPersonById(p1Id);
         Person p2 = family.getPersonById(p2Id);
-        printConnections(family.getShortestRelationChain(p1, p2));
+        printCollection(family.getShortestRelationChain(p1, p2));
     }
 
     @Override
@@ -48,43 +47,38 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printAllMembersFromGenerationLevel(String pId, int generationLevel, FamilyGraph family) {
-        printConnections(family.getAllMembersFromGenerationLevel(family.getPersonById(pId), generationLevel));
-    }
-
-    private void printConnections(Collection<ConnectionEdge> connections) {
-        @Cleanup PrintStream printOut = new PrintStream(out);
-        connections.forEach(printOut::println);
+        printCollection(family.getAllMembersFromGenerationLevel(family.getPersonById(pId), generationLevel));
     }
 
     @Override
     public void printAllPersonsInFamily(FamilyGraph family) {
-        printPersons(family.getAllPersonsInFamily());
+        printCollection(family.getAllPersonsInFamily());
     }
 
     @Override
     public void printFamilyInAscendingOrderOfAge(FamilyGraph family) {
-        printPersons(family.getFamilyInOrderOfAge(true));
+        printCollection(family.getFamilyInOrderOfAge(true));
     }
 
     @Override
     public void printFamilyInDescendingOrderOfAge(FamilyGraph family) {
-        printPersons(family.getFamilyInOrderOfAge(false));
+        printCollection(family.getFamilyInOrderOfAge(false));
     }
 
     @Override
     public void printAllMaleFamilyMembers(FamilyGraph family) {
-        printPersons(family.getAllFamilyMembersOfGender(true));
+        printCollection(family.getAllFamilyMembersOfGender(true));
     }
 
     @Override
     public void printAllFeMaleFamilyMembers(FamilyGraph family) {
-        printPersons(family.getAllFamilyMembersOfGender(false));
+        printCollection(family.getAllFamilyMembersOfGender(false));
     }
 
     @Override
     public void printPersonsByRelation(String pId, String relation, int relationLevel, FamilyGraph family) {
         IRelation iRelation = parseToRelation(relation);
-        printPersons(family.getAllPersonByRelation(family.getPersonById(pId), iRelation, relationLevel));
+        printCollection(family.getAllPersonByRelation(family.getPersonById(pId), iRelation, relationLevel));
     }
 
     @Override
@@ -94,8 +88,8 @@ public class ConsolePrintService implements PrintService {
                 parseToRelation(relation), relationLevel)).forEach(printOut::println);
     }
 
-    private void printPersons(Collection<Person> persons) {
+    private <T> void printCollection(Collection<T> collection) {
         @Cleanup PrintStream printOut = new PrintStream(out);
-        persons.forEach(printOut::println);
+        collection.forEach(printOut::println);
     }
 }

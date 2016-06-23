@@ -6,8 +6,8 @@
 
 package utils;
 
-import graph.ConnectionEdge;
-import graph.Person;
+import coreGraph.ConnectionEdge;
+import coreGraph.Person;
 import relationship.IGenericRelation;
 
 import java.util.Collection;

@@ -7,7 +7,7 @@
 package validation;
 
 import Software.SoftwareTest;
-import graph.Person;
+import coreGraph.Person;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

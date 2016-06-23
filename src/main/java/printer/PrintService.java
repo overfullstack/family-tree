@@ -6,7 +6,7 @@
 
 package printer;
 
-import graph.FamilyGraph;
+import coreGraph.FamilyGraph;
 
 /**
  * Interface for PrintService

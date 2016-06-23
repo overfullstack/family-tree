@@ -4,7 +4,7 @@
  * http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-package graph;
+package coreGraph;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

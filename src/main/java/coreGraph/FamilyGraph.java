@@ -4,7 +4,7 @@
  * http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-package graph;
+package coreGraph;
 
 import com.google.inject.Inject;
 import lombok.NonNull;

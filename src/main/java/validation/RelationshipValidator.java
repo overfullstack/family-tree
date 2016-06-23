@@ -6,9 +6,9 @@
 
 package validation;
 
-import graph.ConnectionEdge;
-import graph.FamilyGraph;
-import graph.Person;
+import coreGraph.ConnectionEdge;
+import coreGraph.FamilyGraph;
+import coreGraph.Person;
 import relationship.GenericRelation;
 import relationship.IGenericRelation;
 import relationship.ISpecificRelation;

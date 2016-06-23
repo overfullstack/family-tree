@@ -4,8 +4,8 @@
  * http://creativecommons.org/licenses/by-sa/4.0/
  */
 
-import graph.ConnectionEdgeTest;
-import graph.FamilyGraphTest;
+import coreGraph.ConnectionEdgeTest;
+import coreGraph.FamilyGraphTest;
 import loader.FileLoaderServiceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

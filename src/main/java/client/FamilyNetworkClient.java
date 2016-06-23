@@ -8,7 +8,7 @@ package client;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import graph.FamilyGraph;
+import coreGraph.FamilyGraph;
 import loader.LoaderService;
 import modules.FamilyModule;
 import printer.PrintService;
