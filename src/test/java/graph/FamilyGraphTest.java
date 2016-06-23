@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static utils.RelationUtils.parseToRelation;
+
 /**
  * Class to test Family graph
  */
@@ -184,8 +186,10 @@ public class FamilyGraphTest extends SoftwareTest {
 
     @Test
     public void isPersonRelatedWithRelation() {
-        Assert.assertTrue(family.isPersonRelatedWithRelation(family.getPersonById("4"), SpecificRelation.MOTHER, 1));
-        Assert.assertFalse(family.isPersonRelatedWithRelation(family.getPersonById("1"), SpecificRelation.AUNT, 1));
+        Assert.assertTrue(family.isPersonRelatedWithRelation(family.getPersonById("4"), parseToRelation("mother"), 1));
+        Assert.assertFalse(family.isPersonRelatedWithRelation(family.getPersonById("1"), parseToRelation("aunt"), 1));
+        Assert.assertTrue(family.isPersonRelatedWithRelation(family.getPersonById("5"), parseToRelation("grandmother"),
+                2));
     }
 
     @Test

@@ -465,7 +465,6 @@ public class FamilyGraph {
             isRelationMale, int relationLevel, Collection<ConnectionEdge> allConnections) {
         if (isRelationMale != null && person.isGenderMale() != isRelationMale) return false;
         for (ConnectionEdge connection : allConnections) {
-            // Need to check relations in reverse, so taking inverse of generationLevel
             if (connection.relationLevel() == relationLevel
                     && connection.relation().equals(genericRelation)) {
                 return true;
