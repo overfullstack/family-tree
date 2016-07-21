@@ -43,7 +43,7 @@ public class FamilyGraph {
     private final Map<String, Person> mPersonIdMap = new HashMap<>(); // Represents all the persons put into the graph.
     private final Map<Person, Set<ConnectionEdge>> mRelationMap = new HashMap<>();
     @NonNull
-    private final IValidator validator;
+    private final IValidator mValidator;
 
     /**
      * Returns all the neighbour direct relations of a persons
@@ -115,7 +115,7 @@ public class FamilyGraph {
             doValidate) {
         addPerson(p1);
         addPerson(p2);
-        if (doValidate && !validator.validate(p1, IGenericRelation, p2, relationLevel, this)) {
+        if (doValidate && !mValidator.validate(p1, IGenericRelation, p2, relationLevel, this)) {
             throw new IllegalArgumentException(new ConnectionEdge(p1, IGenericRelation, p2) + " is NOT a valid Relation");
         }
         mRelationMap.get(p1).add(new ConnectionEdge(p1, IGenericRelation, p2, relationLevel));
@@ -216,7 +216,7 @@ public class FamilyGraph {
      * @return Connection
      */
     public ConnectionEdge getConnection(Person p1, Person p2, boolean doBatchConnect) {
-        ConnectionEdge connection = traverseFamilyGraph(p1, p2, null, doBatchConnect);
+        ConnectionEdge connection = bfsTraverseFamilyGraph(p1, p2, null, doBatchConnect);
         // If p2 is not reached, both are not connected
         return (connection != null && connection.to().equals(p2)) ? connection : null;
     }
@@ -230,7 +230,7 @@ public class FamilyGraph {
      */
     public Collection<ConnectionEdge> getFamilyGraphForPerson(Person person, boolean doBatchConnect) {
         Set<ConnectionEdge> connections = new HashSet<>();
-        traverseFamilyGraph(person, null, connections, doBatchConnect);
+        bfsTraverseFamilyGraph(person, null, connections, doBatchConnect);
         return connections;
     }
 
@@ -244,7 +244,7 @@ public class FamilyGraph {
      * @param doBatchConnect
      * @return Connection with aggregate relation
      */
-    private ConnectionEdge traverseFamilyGraph(Person p1, Person p2, Set<ConnectionEdge> connections, boolean doBatchConnect) {
+    private ConnectionEdge bfsTraverseFamilyGraph(Person p1, Person p2, Set<ConnectionEdge> connections, boolean doBatchConnect) {
         if (p1 == null || mPersonIdMap.get(p1.getId()) == null) {
             throw new IllegalArgumentException("Person " + p1 + " not found in family");
         }
