@@ -18,7 +18,7 @@
 - Java 8
 
 ### Design Decisions
-- Family is represented as a Directed graph, with Persons as Nodes and Relations as Edges.
+- Family is represented as a Directed graph, with Persons as Nodes and Relations as Edges. Adjacency list graph representation is used. 
 - Edge is called 'Connection' and it holds From Person, To Person, Generic Relation and Relation Level.
 - The system can support both Generic and Specific type of relations.
 - Relation level of a connection represents the difference of levels above or below, between the persons in relation.
