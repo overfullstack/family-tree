@@ -28,7 +28,6 @@
 together, and one depends on another to get reverse relation in `getReverseRelation()`. 
 - Specific relations are tied to generic relations with method: `getGenericRelation()`
 - Using enum to represent Relations, as all the relations have static state and enum promotes type safety.
-
 - Classes are Loosely coupled, depending on interfaces rather than concrete implementations. Components can be 
 replaced and extended easily.
 - Classes are designed to be highly Cohesive.
@@ -46,8 +45,8 @@ direct connection between two persons, they are assumed to have a indirect relat
 - COUSIN is both generic and specific relation.
 
 ### Glossary
-- KIN: Generic gender neutral word chosen for UNCLE and AUNT.
-- NIBLING: Generic gender neutral word chosen for NEPHEW and NIECE
+- KIN: Generic gender neutral word chosen to represent UNCLE and AUNT.
+- NIBLING: Generic gender neutral word chosen to represent NEPHEW and NIECE
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" 
