@@ -180,7 +180,7 @@ public class FamilyGraphTest extends SoftwareTest {
         persons.add(family.getPersonById("4"));
         persons.add(family.getPersonById("9"));
 
-        Assert.assertEquals(persons, family.getAllPersonByRelation(family.getPersonById("6"), SpecificRelation
+        Assert.assertEquals(persons, family.getAllPersonsByRelation(family.getPersonById("6"), SpecificRelation
                 .GRANDMOTHER, 2));
     }
 

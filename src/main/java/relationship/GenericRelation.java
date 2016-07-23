@@ -69,7 +69,7 @@ public enum GenericRelation implements IGenericRelation {
                 case NIBLING:
                     return GRANDCHILD;
                 case KIN:
-                    return COUSIN; // No way to figure out if COUSIN OR SIBLING, If no direct connection between the two
+                    return COUSIN; // If no direct connection between the two, No way to figure out if COUSIN OR SIBLING
                 case SPOUSE:
                 case COUSIN:
                     return NIBLING;

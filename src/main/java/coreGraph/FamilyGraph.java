@@ -376,7 +376,6 @@ public class FamilyGraph {
             if (connections != null) {
                 connections.add(nextEdge);
             }
-
         }
         if (connections != null) {
             Collections.reverse(connections);
@@ -407,16 +406,16 @@ public class FamilyGraph {
         return filterPersonsByGender(isMale, new ArrayList<>(mPersonIdMap.values()));
     }
 
-    public Collection<Person> getAllPersonByRelation(Person person, IRelation iRelation, int relationLevel) {
+    public Collection<Person> getAllPersonsByRelation(Person person, IRelation iRelation, int relationLevel) {
         if (iRelation instanceof GenericRelation) {
-            return this.getAllPersonByRelation(person, (GenericRelation) iRelation, relationLevel);
+            return this.getAllPersonsByRelation(person, (GenericRelation) iRelation, relationLevel);
         } else {
-            return this.getAllPersonByRelation(person, (SpecificRelation) iRelation, relationLevel);
+            return this.getAllPersonsByRelation(person, (SpecificRelation) iRelation, relationLevel);
         }
     }
 
-    public Collection<Person> getAllPersonByRelation(Person person, IGenericRelation genericRelation, int relationLevel) {
-        return this.getAllPersonByRelation(person, genericRelation, null, relationLevel);
+    public Collection<Person> getAllPersonsByRelation(Person person, IGenericRelation genericRelation, int relationLevel) {
+        return this.getAllPersonsByRelation(person, genericRelation, null, relationLevel);
     }
 
     /**
@@ -427,13 +426,13 @@ public class FamilyGraph {
      * @param relationLevel
      * @return
      */
-    public Collection<Person> getAllPersonByRelation(Person person, ISpecificRelation specificRelation, int
+    public Collection<Person> getAllPersonsByRelation(Person person, ISpecificRelation specificRelation, int
             relationLevel) {
-        return this.getAllPersonByRelation(person, specificRelation.getGenericRelation(), specificRelation
+        return this.getAllPersonsByRelation(person, specificRelation.getGenericRelation(), specificRelation
                 .isRelationMale(), relationLevel);
     }
 
-    private Collection<Person> getAllPersonByRelation(Person person, IGenericRelation genericRelation, Boolean
+    private Collection<Person> getAllPersonsByRelation(Person person, IGenericRelation genericRelation, Boolean
             isRelationMale, int relationLevel) {
         Collection<Person> persons = new ArrayList<>();
         IGenericRelation reverseRelation = genericRelation.getReverseRelation();

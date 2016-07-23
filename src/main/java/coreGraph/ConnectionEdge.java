@@ -72,12 +72,8 @@ public final class ConnectionEdge {
 
     @Override
     public String toString() {
-        StringBuilder grandRelationPrefix = new StringBuilder();
-
         int absoluteRelationLevel = Math.abs(this.relationLevel);
-        if (absoluteRelationLevel > 2) {
-            grandRelationPrefix = generateGrandRelationPrefix(absoluteRelationLevel);
-        }
+        StringBuilder grandRelationPrefix = generateGrandRelationPrefix(absoluteRelationLevel);
         return this.from + " is " + grandRelationPrefix.append(this.relation().getGenderSpecificRelation(this.from
                 .isGenderMale())) + " of " + this.to + " RelationLevel: " + this.relationLevel;
     }
