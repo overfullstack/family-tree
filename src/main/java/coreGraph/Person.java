@@ -30,7 +30,7 @@ public final class Person {
         this(id, name, Integer.valueOf(age), Boolean.valueOf(isGenderMale));
     }
 
-    /* No setters to achieve Immutability */
+    /* No setters written, to achieve Immutability */
 
     public boolean areAllAttributesMatching(Person person) {
         return this.id.equalsIgnoreCase(person.id) && this.name.equalsIgnoreCase(person.name) && this.age == person
