@@ -29,7 +29,7 @@ public final class Person {
     private final boolean isGenderMale; // Male-true, Female-false
 
     public Person(String id, String name, String age, String isGenderMale) {
-        this(id, name, Integer.valueOf(age), Boolean.valueOf(isGenderMale));
+        this(id, name, Integer.parseInt(age), Boolean.parseBoolean(isGenderMale));
     }
 
     /* No setters written, to achieve Immutability */
