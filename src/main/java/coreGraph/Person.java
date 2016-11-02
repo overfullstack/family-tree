@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.Objects;
+
 /**
  * Class to represent Person.
  */
@@ -33,18 +35,21 @@ public final class Person {
     /* No setters written, to achieve Immutability */
 
     public boolean areAllAttributesMatching(Person person) {
-        return this.id.equalsIgnoreCase(person.id) && this.name.equalsIgnoreCase(person.name) && this.age == person
-                .age && this.isGenderMale == person.isGenderMale;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof Person) && ((Person) obj).id.equals(this.id);
+        return this.id.equalsIgnoreCase(person.id)
+                && this.name.equalsIgnoreCase(person.name)
+                && this.age == person.age
+                && this.isGenderMale == person.isGenderMale;
     }
 
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Person)
+                && ((Person) obj).id.equals(this.id);
     }
 
     @Override

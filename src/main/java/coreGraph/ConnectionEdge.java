@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
 import relationship.IGenericRelation;
 import relationship.ISpecificRelation;
 
+import java.util.Objects;
+
 import static utils.RelationUtils.parseToGenericRelation;
 
 /**
@@ -33,12 +35,12 @@ public final class ConnectionEdge {
     @Getter
     private int relationLevel;
 
-    public ConnectionEdge(Person from, IGenericRelation relation, Person to) {
-        this(from, relation, to, relation.getRelationLevel());
-    }
-
     public ConnectionEdge(Person from, ISpecificRelation relation, Person to) {
         this(from, relation.getGenericRelation(), to);
+    }
+
+    public ConnectionEdge(Person from, IGenericRelation relation, Person to) {
+        this(from, relation, to, relation.getRelationLevel());
     }
 
     /**
@@ -56,18 +58,20 @@ public final class ConnectionEdge {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ConnectionEdge) {
-            ConnectionEdge edge = (ConnectionEdge) obj;
-            return this.from.equals(edge.from) && this.to.equals(edge.to) && this.relation.equals(edge.relation) && this
-                    .relationLevel == edge.relationLevel;
-        }
-        return false;
+    public int hashCode() {
+        return Objects.hash(this.from, this.to);
     }
 
     @Override
-    public int hashCode() {
-        return this.from.hashCode() + this.to.hashCode();
+    public boolean equals(Object obj) {
+        if (obj instanceof ConnectionEdge) {
+            ConnectionEdge edge = (ConnectionEdge) obj;
+            return Objects.equals(this.from, edge.from)
+                    && Objects.equals(this.to, edge.to)
+                    && Objects.equals(this.relation, edge.relation)
+                    && this.relationLevel == edge.relationLevel;
+        }
+        return false;
     }
 
     @Override
