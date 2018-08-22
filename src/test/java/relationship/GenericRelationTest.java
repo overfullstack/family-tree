@@ -1,31 +1,32 @@
 package relationship;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class to test Generic Relation
  */
-public class GenericRelationTest {
+class GenericRelationTest {
 
     @Test
-    public void getGenderSpecificRelation() {
-        Assert.assertEquals(SpecificRelation.MOTHER, GenericRelation.PARENT.getGenderSpecificRelation(false));
-        Assert.assertEquals(SpecificRelation.MOTHER, GenericRelation.PARENT.getFemaleRelation());
+    void getGenderSpecificRelation() {
+        assertEquals(SpecificRelation.MOTHER, GenericRelation.PARENT.getGenderSpecificRelation(false));
+        assertEquals(SpecificRelation.MOTHER, GenericRelation.PARENT.getFemaleRelation());
     }
 
     @Test
-    public void getReverseRelation() {
-        Assert.assertEquals(GenericRelation.KIN, GenericRelation.NIBLING.getReverseRelation());
+    void getReverseRelation() {
+        assertEquals(GenericRelation.KIN, GenericRelation.NIBLING.getReverseRelation());
     }
 
     @Test
-    public void getAlternateRelation() {
-        Assert.assertEquals(GenericRelation.PARENT, GenericRelation.KIN.getAlternateRelation());
+    void getAlternateRelation() {
+        assertEquals(GenericRelation.PARENT, GenericRelation.KIN.getAlternateRelation());
     }
 
     @Test
-    public void getRelationLevel() {
-        Assert.assertEquals(-2, GenericRelation.GRANDCHILD.getRelationLevel());
+    void getRelationLevel() {
+        assertEquals(-2, GenericRelation.GRANDCHILD.getRelationLevel());
     }
 }

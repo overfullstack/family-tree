@@ -2,8 +2,6 @@ package loader;
 
 import coreGraph.FamilyGraph;
 
-import java.io.IOException;
-
 /**
  * Dummy Class for reading family from DB.
  */
@@ -17,7 +15,7 @@ public class DBLoaderService implements LoaderService {
     }
 
     @Override
-    public void loadFamily(FamilyGraph family) throws IOException {
+    public void loadFamily(FamilyGraph family) {
         // Do necessary to read family from db
     }
 }

@@ -21,7 +21,7 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printFamilyTree(String pId, FamilyGraph family) {
-        printCollection(family.getFamilyGraphForPerson(family.getPersonById(pId), false));
+        printCollection(family.getAllConnectionsInFamilyForPerson(family.getPersonById(pId), false));
     }
 
     @Override

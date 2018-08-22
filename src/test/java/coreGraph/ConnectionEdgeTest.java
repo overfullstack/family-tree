@@ -1,24 +1,25 @@
 package coreGraph;
 
 import Software.SoftwareTest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class to test ConnectionEdge
  */
-public class ConnectionEdgeTest extends SoftwareTest {
+class ConnectionEdgeTest extends SoftwareTest {
     @Test
-    public void testToString() {
+    void testToString() {
         String expected = "(7)Lakshmi is GREAT GREAT GRANDMOTHER of (6)Pranavi RelationLevel: 4\n";
         System.out.println(new ConnectionEdge("7", "GRANDPARENT", "6", 4, family));
-        Assert.assertEquals(expected, outContent.toString());
+        assertEquals(expected, outContent.toString());
     }
 
     @Test
-    public void testToString1() {
+    void testToString1() {
         String expected = "(6)Pranavi is GREAT GREAT GRANDDAUGHTER of (7)Lakshmi RelationLevel: -4\n";
         System.out.println(new ConnectionEdge("6", "GRANDCHILD", "7", -4, family));
-        Assert.assertEquals(expected, outContent.toString());
+        assertEquals(expected, outContent.toString());
     }
 }

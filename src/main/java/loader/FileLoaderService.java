@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 
 /**
  * Class to load Family from file.
@@ -21,9 +20,9 @@ public class FileLoaderService implements LoaderService {
     
     @Override
     public void loadFamily(FamilyGraph family) throws IOException {
-        @Cleanup Reader reader = new BufferedReader(new FileReader(new File(familyFile)));
-        load(family, (BufferedReader) reader, true);
-        load(family, (BufferedReader) reader, false);
+        @Cleanup BufferedReader reader = new BufferedReader(new FileReader(new File(familyFile)));
+        load(family, reader, true);
+        load(family, reader, false);
     }
 
     private void load(FamilyGraph family, BufferedReader reader, boolean isLoadingPersons) throws IOException {

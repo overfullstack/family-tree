@@ -7,8 +7,13 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
-    compileOnly 'org.projectlombok:lombok:1.16.20'
+    compile 'com.google.inject:guice:+'
+    compileOnly 'org.projectlombok:lombok:+'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:+'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:+'
 }

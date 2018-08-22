@@ -2,55 +2,57 @@ package validation;
 
 import Software.SoftwareTest;
 import coreGraph.Person;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import relationship.GenericRelation;
 import relationship.SpecificRelation;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class to test GenderValidator
  */
-public class GenderValidatorTest extends SoftwareTest {
+class GenderValidatorTest extends SoftwareTest {
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         validator = new GenderValidator();
     }
 
     @Test
-    public void validate() {
+    void validate() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("8");
-        Assert.assertTrue(validator.validate(p1, GenericRelation.SPOUSE, p2, 0, null));
+        assertTrue(validator.validate(p1, GenericRelation.SPOUSE, p2, 0, null));
     }
 
     @Test
-    public void validate1() {
+    void validate1() {
         Person p1 = family.getPersonById("2");
         Person p2 = family.getPersonById("8");
-        Assert.assertFalse(validator.validate(p1, GenericRelation.SPOUSE, p2, 0, null));
+        assertFalse(validator.validate(p1, GenericRelation.SPOUSE, p2, 0, null));
     }
 
     @Test
-    public void validate2() {
+    void validate2() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("8");
-        Assert.assertTrue(validator.validate(p1, SpecificRelation.WIFE, p2, 0, null));
+        assertTrue(validator.validate(p1, SpecificRelation.WIFE, p2, 0, null));
     }
 
     @Test
-    public void validate3() {
+    void validate3() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("2");
-        Assert.assertFalse(validator.validate(p1, SpecificRelation.BROTHER, p2, 0, null));
+        assertFalse(validator.validate(p1, SpecificRelation.BROTHER, p2, 0, null));
     }
 
     @Test
-    public void validate4() {
+    void validate4() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("2");
-        Assert.assertTrue(validator.validate(p1, SpecificRelation.SISTER, p2, 0, null));
+        assertTrue(validator.validate(p1, SpecificRelation.SISTER, p2, 0, null));
     }
 
 }

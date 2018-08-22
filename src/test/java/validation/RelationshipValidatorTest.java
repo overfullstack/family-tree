@@ -2,47 +2,49 @@ package validation;
 
 import Software.SoftwareTest;
 import coreGraph.Person;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import relationship.GenericRelation;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class to test RelationShipValidator
  */
-public class RelationshipValidatorTest extends SoftwareTest {
-    @Before
-    public void init() {
+class RelationshipValidatorTest extends SoftwareTest {
+    @BeforeEach
+    void init() {
         validator = new RelationshipValidator();
     }
 
     @Test
-    public void validate() {
+    void validate() {
         Person p1 = family.getPersonById("3");
         Person p2 = family.getPersonById("8");
-        Assert.assertTrue(validator.validate(p1, GenericRelation.KIN, p2, 1, family));
+        assertTrue(validator.validate(p1, GenericRelation.KIN, p2, 1, family));
     }
 
     @Test
-    public void validate1() {
+    void validate1() {
         Person p1 = family.getPersonById("3");
         Person p2 = family.getPersonById("8");
-        Assert.assertFalse(validator.validate(p1, GenericRelation.PARENT, p2, 1, family));
+        assertFalse(validator.validate(p1, GenericRelation.PARENT, p2, 1, family));
     }
 
     @Test
-    public void validate2() {
+    void validate2() {
         Person p1 = family.getPersonById("4");
         Person p2 = family.getPersonById("2");
-        Assert.assertTrue(validator.validate(p1, GenericRelation.PARENT, p2, 1, family));
+        assertTrue(validator.validate(p1, GenericRelation.PARENT, p2, 1, family));
     }
 
     @Test
-    public void validateRelationLevel() {
+    void validateRelationLevel() {
         Person p1 = family.getPersonById("4");
         Person p2 = family.getPersonById("2");
-        Assert.assertFalse(validator.validate(p1, GenericRelation.PARENT, p2, 2, family));
-        Assert.assertFalse(validator.validate(p1, GenericRelation.GRANDPARENT, p2, 5, family));
-        Assert.assertFalse(validator.validate(p1, GenericRelation.GRANDCHILD, p2, -5, family));
+        assertFalse(validator.validate(p1, GenericRelation.PARENT, p2, 2, family));
+        assertFalse(validator.validate(p1, GenericRelation.GRANDPARENT, p2, 5, family));
+        assertFalse(validator.validate(p1, GenericRelation.GRANDCHILD, p2, -5, family));
     }
 }

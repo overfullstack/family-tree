@@ -1,16 +1,17 @@
 package relationship;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class to test SpecificRelation
  */
-public class SpecificRelationTest {
+class SpecificRelationTest {
 
     @Test
-    public void getGenericRelation() {
-        Assert.assertEquals(GenericRelation.PARENT, SpecificRelation.MOTHER.getGenericRelation());
+    void getGenericRelation() {
+        assertEquals(GenericRelation.PARENT, SpecificRelation.MOTHER.getGenericRelation());
     }
 
 }

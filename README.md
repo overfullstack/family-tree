@@ -12,7 +12,7 @@
 10. Display Persons Related to someone with Relation (Ex: Display all Persons who are MOTHERs to someone)
 
 ### Frameworks or Libs Used
-- Lombok - to auto-generate boiler plate code
+- [Lombok](https://projectlombok.org/features/all)  - to auto-generate boiler plate code
 - Google Guice - For Dependency Injection
 - Gradle - For Build
 - Java 8

@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import coreGraph.FamilyGraph;
 import loader.LoaderService;
 import modules.FamilyModule;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import validation.IValidator;
 
 import java.io.ByteArrayOutputStream;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * Test Class holding setUp logic and is inherited by all Test Classes.
+ * Test Class holding setUpAll logic and is inherited by all Test Classes.
  */
 public class SoftwareTest {
     @Inject
@@ -25,8 +25,8 @@ public class SoftwareTest {
     @Inject
     protected static ByteArrayOutputStream outContent;
     
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    void setUpAll() throws IOException {
         Guice.createInjector(new FamilyModule() {
             @Override
             protected void configure() {

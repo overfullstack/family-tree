@@ -2,32 +2,34 @@ package validation;
 
 import Software.SoftwareTest;
 import coreGraph.Person;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import relationship.GenericRelation;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class to Test AgeValidator
  */
-public class AgeValidatorTest extends SoftwareTest {
-    @Before
-    public void init() {
+class AgeValidatorTest extends SoftwareTest {
+    @BeforeEach
+    void init() {
         validator = new AgeValidator();
     }
 
     @Test
-    public void validate() {
+    void validate() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("6");
-        Assert.assertTrue(validator.validate(p1, GenericRelation.PARENT, p2, 1, null));
+        assertTrue(validator.validate(p1, GenericRelation.PARENT, p2, 1, null));
     }
 
     @Test
-    public void validate1() {
+    void validate1() {
         Person p1 = family.getPersonById("1");
         Person p2 = family.getPersonById("6");
-        Assert.assertFalse(validator.validate(p2, GenericRelation.PARENT, p1, 1, null));
+        assertFalse(validator.validate(p2, GenericRelation.PARENT, p1, 1, null));
     }
 
 }

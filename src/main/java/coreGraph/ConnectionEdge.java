@@ -14,7 +14,7 @@ import static utils.RelationUtils.parseToGenericRelation;
 /**
  * Class representing Connection between persons
  */
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Accessors(fluent = true)
 public final class ConnectionEdge {
     @NonNull
@@ -72,8 +72,9 @@ public final class ConnectionEdge {
     public String toString() {
         int absoluteRelationLevel = Math.abs(this.relationLevel);
         StringBuilder grandRelationPrefix = generateGrandRelationPrefix(absoluteRelationLevel);
-        return this.from + " is " + grandRelationPrefix.append(this.relation().getGenderSpecificRelation(this.from
-                .isGenderMale())) + " of " + this.to + " RelationLevel: " + this.relationLevel;
+        return String.format("%s is %s of %s RelationLevel: %d", 
+                this.from, grandRelationPrefix.append(this.relation().getGenderSpecificRelation(this.from.isGenderMale())), 
+                this.to, this.relationLevel);
     }
 
     private StringBuilder generateGrandRelationPrefix(int relationLevel) {
