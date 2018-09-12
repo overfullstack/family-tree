@@ -4,22 +4,21 @@ import coreGraph.ConnectionEdge;
 import coreGraph.FamilyGraph;
 import coreGraph.Person;
 import relationship.GenericRelation;
-import relationship.IGenericRelation;
-import relationship.ISpecificRelation;
+import relationship.SpecificRelation;
 
 /**
  * Class to validate Possible relationship
  */
-public class RelationshipValidator implements IValidator {
-    private IValidator nextValidator;
+public class RelationshipValidator implements Validator {
+    private Validator nextValidator;
 
     @Override
-    public void setNextValidatorInChain(IValidator validator) {
+    public void setNextValidatorInChain(Validator validator) {
         this.nextValidator = validator;
     }
 
     @Override
-    public boolean validate(Person p1, IGenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
+    public boolean validate(Person p1, GenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
         // It's Ok to compare generic relations as it has already passed the gender validation.
         ConnectionEdge possibleConnection = family.getConnection(p1, p2, false);
         boolean isValid;
@@ -28,7 +27,7 @@ public class RelationshipValidator implements IValidator {
             isValid = true;
         } else {
             boolean isRelationLevelValid;
-            switch ((GenericRelation) genericRelation) {
+            switch (genericRelation) {
                 case GRANDPARENT:
                     isRelationLevelValid = relationLevel >= possibleConnection.relationLevel();
                     break;
@@ -47,7 +46,7 @@ public class RelationshipValidator implements IValidator {
     }
 
     @Override
-    public boolean validate(Person p1, ISpecificRelation specificRelation, Person p2, int relationLevel, FamilyGraph family) {
+    public boolean validate(Person p1, SpecificRelation specificRelation, Person p2, int relationLevel, FamilyGraph family) {
         return this.validate(p1, specificRelation.getGenericRelation(), p2, relationLevel, family);
     }
 }

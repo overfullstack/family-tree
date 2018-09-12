@@ -10,7 +10,7 @@ import printer.ConsolePrintService;
 import printer.PrintService;
 import validation.AgeValidator;
 import validation.GenderValidator;
-import validation.IValidator;
+import validation.Validator;
 import validation.RelationshipValidator;
 
 import java.io.OutputStream;
@@ -29,10 +29,10 @@ public class FamilyModule extends AbstractModule {
     }
 
     @Provides
-    public IValidator provideValidator() {
-        IValidator genderValidator = new GenderValidator();
-        IValidator ageValidator = new AgeValidator();
-        IValidator relationShipValidator = new RelationshipValidator();
+    public Validator provideValidator() {
+        Validator genderValidator = new GenderValidator();
+        Validator ageValidator = new AgeValidator();
+        Validator relationShipValidator = new RelationshipValidator();
 
         genderValidator.setNextValidatorInChain(ageValidator);
         ageValidator.setNextValidatorInChain(relationShipValidator);

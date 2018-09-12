@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
  * Class representing Specific relations
  */
 @RequiredArgsConstructor
-public enum SpecificRelation implements ISpecificRelation {
+public enum SpecificRelation implements Relation {
     HUSBAND(true),
     WIFE(false),
 
@@ -42,5 +42,5 @@ public enum SpecificRelation implements ISpecificRelation {
 
     @Getter
     @Setter
-    private IGenericRelation genericRelation;
+    private GenericRelation genericRelation;
 }

@@ -1,15 +1,14 @@
 package utils;
 
 import relationship.GenericRelation;
-import relationship.IGenericRelation;
-import relationship.IRelation;
+import relationship.Relation;
 import relationship.SpecificRelation;
 
 /**
  * Utility Class to deal with relation
  */
 public interface RelationUtils {
-    static IGenericRelation parseToGenericRelation(String relation) {
+    static GenericRelation parseToGenericRelation(String relation) {
         relation = relation.toUpperCase();
         try {
             return GenericRelation.valueOf(relation);
@@ -18,7 +17,7 @@ public interface RelationUtils {
         }
     }
 
-    static IRelation parseToRelation(String relation) {
+    static Relation parseToRelation(String relation) {
         relation = relation.toUpperCase();
         try {
             return GenericRelation.valueOf(relation);

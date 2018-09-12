@@ -5,12 +5,11 @@ import lombok.Getter;
 /**
  * Class representing Generic Relations
  */
-public enum GenericRelation implements IGenericRelation {
-
+public enum GenericRelation implements Relation {
     PARENT(1, SpecificRelation.FATHER, SpecificRelation.MOTHER) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case KIN:
                     return GRANDPARENT;
@@ -33,8 +32,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     KIN(1, SpecificRelation.UNCLE, SpecificRelation.AUNT) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case KIN:
                     return GRANDPARENT;
@@ -55,8 +54,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     CHILD(-1, SpecificRelation.SON, SpecificRelation.DAUGHTER) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                     return SPOUSE;
                 case CHILD:
@@ -79,8 +78,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     NIBLING(-1, SpecificRelation.NEPHEW, SpecificRelation.NIECE) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case KIN:
                     return COUSIN;
@@ -101,8 +100,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     GRANDPARENT(2, SpecificRelation.GRANDFATHER, SpecificRelation.GRANDMOTHER) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case KIN:
                 case GRANDPARENT:
@@ -122,8 +121,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     GRANDCHILD(-2, SpecificRelation.GRANDSON, SpecificRelation.GRANDDAUGHTER) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case KIN:
                     return NIBLING;
@@ -144,8 +143,8 @@ public enum GenericRelation implements IGenericRelation {
 
     SPOUSE(0, SpecificRelation.HUSBAND, SpecificRelation.WIFE) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                     return KIN;
                 case CHILD:
@@ -164,8 +163,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     SIBLING(0, SpecificRelation.BROTHER, SpecificRelation.SISTER) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case PARENT:
                 case NIBLING:
                 case KIN:
@@ -185,8 +184,8 @@ public enum GenericRelation implements IGenericRelation {
     },
     COUSIN(0, SpecificRelation.COUSIN, SpecificRelation.COUSIN) {
         @Override
-        public IGenericRelation getNextGenericRelation(IGenericRelation curRelation) {
-            switch ((GenericRelation) curRelation) {
+        public GenericRelation getNextGenericRelation(GenericRelation curRelation) {
+            switch (curRelation) {
                 case GRANDPARENT:
                 case GRANDCHILD:
                 case KIN:
@@ -230,15 +229,15 @@ public enum GenericRelation implements IGenericRelation {
     @Getter
     private final int relationLevel;
     @Getter
-    private final ISpecificRelation maleRelation;
+    private final SpecificRelation maleRelation;
     @Getter
-    private final ISpecificRelation femaleRelation;
+    private final SpecificRelation femaleRelation;
     @Getter
-    private IGenericRelation reverseRelation;
+    private GenericRelation reverseRelation;
     @Getter
-    private IGenericRelation alternateRelation;
+    private GenericRelation alternateRelation;
 
-    GenericRelation(int relationLevel, ISpecificRelation maleRelation, ISpecificRelation femaleRelation) {
+    GenericRelation(int relationLevel, SpecificRelation maleRelation, SpecificRelation femaleRelation) {
         this.relationLevel = relationLevel;
         // In case parameters are provided in reverse order of gender, store them in proper order.
         // Null means neutral, used for COUSIN
@@ -253,8 +252,12 @@ public enum GenericRelation implements IGenericRelation {
         this.femaleRelation.setGenericRelation(this);
     }
 
-    @Override
-    public ISpecificRelation getGenderSpecificRelation(boolean isMale) {
+    public SpecificRelation getGenderSpecificRelation(boolean isMale) {
         return isMale ? this.maleRelation : this.femaleRelation;
     }
+
+    public GenericRelation getNextGenericRelation(GenericRelation relation) {
+        return null;
+    }
+    
 }

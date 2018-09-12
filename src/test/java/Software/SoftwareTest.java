@@ -6,7 +6,7 @@ import coreGraph.FamilyGraph;
 import loader.LoaderService;
 import modules.FamilyModule;
 import org.junit.jupiter.api.BeforeEach;
-import validation.IValidator;
+import validation.Validator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.io.PrintStream;
  */
 public class SoftwareTest {
     @Inject
-    protected static IValidator validator;
+    protected static Validator validator;
     @Inject
     protected static FamilyGraph family;
     @Inject

@@ -3,24 +3,23 @@ package validation;
 import coreGraph.FamilyGraph;
 import coreGraph.Person;
 import relationship.GenericRelation;
-import relationship.IGenericRelation;
-import relationship.ISpecificRelation;
+import relationship.SpecificRelation;
 
 /**
  * Class to validate age criteria for a Relation
  */
-public class AgeValidator implements IValidator {
-    private IValidator nextValidator;
+public class AgeValidator implements Validator {
+    private Validator nextValidator;
 
     @Override
-    public void setNextValidatorInChain(IValidator validator) {
+    public void setNextValidatorInChain(Validator validator) {
         this.nextValidator = validator;
     }
 
     @Override
-    public boolean validate(Person p1, IGenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
+    public boolean validate(Person p1, GenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
         boolean isValid;
-        switch ((GenericRelation) genericRelation) {
+        switch (genericRelation) {
             case PARENT:
             case KIN:
             case GRANDPARENT:
@@ -39,7 +38,7 @@ public class AgeValidator implements IValidator {
     }
 
     @Override
-    public boolean validate(Person p1, ISpecificRelation specificRelation, Person p2, int relationLevel, FamilyGraph family) {
+    public boolean validate(Person p1, SpecificRelation specificRelation, Person p2, int relationLevel, FamilyGraph family) {
         return this.validate(p1, specificRelation.getGenericRelation(), p2, relationLevel, family);
     }
 }

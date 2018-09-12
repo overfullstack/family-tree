@@ -2,7 +2,7 @@ package utils;
 
 import coreGraph.ConnectionEdge;
 import coreGraph.Person;
-import relationship.IGenericRelation;
+import relationship.GenericRelation;
 
 import java.util.Collection;
 import java.util.function.Predicate;
@@ -21,7 +21,7 @@ public interface FilterUtils {
         return filter(allPersons, person -> person.isGenderMale() == gender);
     }
 
-    static Collection<ConnectionEdge> filterConnectionsBySpecificRelation(IGenericRelation genericRelation,
+    static Collection<ConnectionEdge> filterConnectionsBySpecificRelation(GenericRelation genericRelation,
                                                                           Boolean isRelationGenderMale, int relationLevel,
                                                                           Collection<ConnectionEdge> allConnections) {
         return filter(allConnections, connection -> connection.relationLevel() == relationLevel

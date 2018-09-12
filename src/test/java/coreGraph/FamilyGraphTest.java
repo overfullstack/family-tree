@@ -65,9 +65,7 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void getPersonByIdNotPresent() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            family.getPersonById("123");
-        });
+        assertThrows(IllegalArgumentException.class, () -> family.getPersonById("123"));
     }
 
     @Test

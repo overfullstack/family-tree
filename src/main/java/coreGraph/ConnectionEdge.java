@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import relationship.IGenericRelation;
-import relationship.ISpecificRelation;
+import relationship.GenericRelation;
+import relationship.SpecificRelation;
 
 import java.util.Objects;
 
@@ -22,18 +22,18 @@ public final class ConnectionEdge {
     private final Person from;
     @NonNull
     @Getter
-    private final IGenericRelation relation;
+    private final GenericRelation relation;
     @NonNull
     @Getter
     private final Person to;
     @Getter
     private int relationLevel;
 
-    public ConnectionEdge(Person from, ISpecificRelation relation, Person to) {
+    public ConnectionEdge(Person from, SpecificRelation relation, Person to) {
         this(from, relation.getGenericRelation(), to);
     }
 
-    public ConnectionEdge(Person from, IGenericRelation relation, Person to) {
+    public ConnectionEdge(Person from, GenericRelation relation, Person to) {
         this(from, relation, to, relation.getRelationLevel());
     }
 

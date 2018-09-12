@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import coreGraph.FamilyGraph;
 import coreGraph.Person;
 import lombok.Cleanup;
-import relationship.IRelation;
+import relationship.Relation;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -71,7 +71,7 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printPersonsByRelation(String pId, String relation, int relationLevel, FamilyGraph family) {
-        IRelation iRelation = parseToRelation(relation);
+        Relation iRelation = parseToRelation(relation);
         printCollection(family.getAllPersonsByRelation(family.getPersonById(pId), iRelation, relationLevel));
     }
 

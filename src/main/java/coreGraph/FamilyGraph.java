@@ -4,11 +4,9 @@ import com.google.inject.Inject;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import relationship.GenericRelation;
-import relationship.IGenericRelation;
-import relationship.IRelation;
-import relationship.ISpecificRelation;
+import relationship.Relation;
 import relationship.SpecificRelation;
-import validation.IValidator;
+import validation.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,9 +33,9 @@ import static utils.RelationUtils.parseToGenericRelation;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class FamilyGraph {
     private final Map<String, Person> mPersonIdMap = new HashMap<>(); // Represents all the persons put into the graph.
-    private final Map<Person, Set<ConnectionEdge>> mRelationMap = new HashMap<Person, Set<ConnectionEdge>>();
+    private final Map<Person, Set<ConnectionEdge>> mRelationMap = new HashMap<>();
     @NonNull
-    private final IValidator mValidator;
+    private final Validator mValidator;
 
     /**
      * Returns all the neighbour direct relations of a persons
@@ -92,8 +90,8 @@ public class FamilyGraph {
             throw new IllegalArgumentException("Person with Id: " + p2Id + " not found in family to connect");
         }
         // relation string parameter can either be generic or specific
-        IGenericRelation IGenericRelation = parseToGenericRelation(relation);
-        connectPersons(p1, IGenericRelation, p2, IGenericRelation.getRelationLevel(), true);
+        GenericRelation GenericRelation = parseToGenericRelation(relation);
+        connectPersons(p1, GenericRelation, p2, GenericRelation.getRelationLevel(), true);
     }
 
 
@@ -101,31 +99,31 @@ public class FamilyGraph {
      * Connects two persons in the family with Generic relation
      *
      * @param p1               From Person
-     * @param IGenericRelation Generic Relation between Persons
+     * @param GenericRelation Generic Relation between Persons
      * @param p2               To Person
      * @param doValidate       Switch to turn validation on or off
      */
-    private void connectPersons(Person p1, IGenericRelation IGenericRelation, Person p2, int relationLevel, boolean
+    private void connectPersons(Person p1, GenericRelation GenericRelation, Person p2, int relationLevel, boolean
             doValidate) {
         addPerson(p1);
         addPerson(p2);
-        if (doValidate && !mValidator.validate(p1, IGenericRelation, p2, relationLevel, this)) {
-            throw new IllegalArgumentException(new ConnectionEdge(p1, IGenericRelation, p2) + " is NOT a valid Relation");
+        if (doValidate && !mValidator.validate(p1, GenericRelation, p2, relationLevel, this)) {
+            throw new IllegalArgumentException(new ConnectionEdge(p1, GenericRelation, p2) + " is NOT a valid Relation");
         }
-        mRelationMap.get(p1).add(new ConnectionEdge(p1, IGenericRelation, p2, relationLevel));
-        mRelationMap.get(p2).add(new ConnectionEdge(p2, IGenericRelation.getReverseRelation(), p1, -relationLevel));
+        mRelationMap.get(p1).add(new ConnectionEdge(p1, GenericRelation, p2, relationLevel));
+        mRelationMap.get(p2).add(new ConnectionEdge(p2, GenericRelation.getReverseRelation(), p1, -relationLevel));
     }
 
     /**
      * Connects two persons in the family with Specific relation
      *
      * @param p1                From Person Id
-     * @param ISpecificRelation Specific Relation between Persons
+     * @param SpecificRelation Specific Relation between Persons
      * @param p2                To Person Id
      */
-    public void connectPersons(Person p1, ISpecificRelation ISpecificRelation, Person p2, int relationLevel, boolean
+    public void connectPersons(Person p1, SpecificRelation SpecificRelation, Person p2, int relationLevel, boolean
             doValidate) {
-        this.connectPersons(p1, ISpecificRelation.getGenericRelation(), p2, relationLevel, doValidate);
+        this.connectPersons(p1, SpecificRelation.getGenericRelation(), p2, relationLevel, doValidate);
     }
 
     /**
@@ -252,7 +250,7 @@ public class FamilyGraph {
         Map<Person, ConnectionEdge> relationMap = new HashMap<>();
         ConnectionEdge previousConnection = null;
         Person neighbourRelative;
-        IGenericRelation currentRelation, nextRelation;
+        GenericRelation currentRelation, nextRelation;
 
         boolean isGettingFamilyGraphForPerson = (p2 == null);
         if (isGettingFamilyGraphForPerson && connectionsToPopulate == null) {
@@ -309,9 +307,9 @@ public class FamilyGraph {
         if (p2 == null || mPersonIdMap.get(p2.getId()) == null) {
             throw new IllegalArgumentException("Person " + p2 + " not found in family");
         }
-        Map<Person, ConnectionEdge> connectionPathMap = new HashMap<>();
-        Queue<Person> queue = new LinkedList<>();
-        Map<Person, Boolean> visited = new HashMap<>();
+        var connectionPathMap = new HashMap<Person, ConnectionEdge>();
+        var queue = new LinkedList<Person>();
+        var visited = new HashMap<Person, Boolean>();
 
         queue.add(p1);
         visited.put(p1, true);
@@ -354,7 +352,7 @@ public class FamilyGraph {
     private ConnectionEdge getAggregateRelationWithRelationChain(Person p1, Person p2,
                                                                  Map<Person, ConnectionEdge> connectionPath, List<ConnectionEdge> connections) {
         ConnectionEdge nextEdge, aggregateConnection = null;
-        IGenericRelation nextRelation, aggregateRelation = null;
+        GenericRelation nextRelation, aggregateRelation = null;
         Person nextPerson = p2;
 
         while (!nextPerson.equals(p1)) {
@@ -389,7 +387,7 @@ public class FamilyGraph {
             if (p1.getAge() == p2.getAge()) return 0;
             return (p1.getAge() > p2.getAge()) ? 1 : -1;
         };
-        List<Person> sortedPersons = new ArrayList(mPersonIdMap.values());
+        var sortedPersons = new ArrayList(mPersonIdMap.values());
         if (isOrderAscending) {
             sortedPersons.sort(ascendingAgeComparator);
         } else {
@@ -402,15 +400,15 @@ public class FamilyGraph {
         return filterPersonsByGender(isMale, new ArrayList<>(mPersonIdMap.values()));
     }
 
-    public Collection<Person> getAllPersonsByRelation(Person person, IRelation iRelation, int relationLevel) {
-        if (iRelation instanceof GenericRelation) {
-            return this.getAllPersonsByRelation(person, (GenericRelation) iRelation, relationLevel);
+    public Collection<Person> getAllPersonsByRelation(Person person, Relation relation, int relationLevel) {
+        if (relation instanceof GenericRelation) {
+            return this.getAllPersonsByRelation(person, (GenericRelation) relation, relationLevel);
         } else {
-            return this.getAllPersonsByRelation(person, (SpecificRelation) iRelation, relationLevel);
+            return this.getAllPersonsByRelation(person, (SpecificRelation) relation, relationLevel);
         }
     }
 
-    private Collection<Person> getAllPersonsByRelation(Person person, IGenericRelation genericRelation, int relationLevel) {
+    private Collection<Person> getAllPersonsByRelation(Person person, GenericRelation genericRelation, int relationLevel) {
         return this.getAllPersonsByRelation(person, genericRelation, null, relationLevel);
     }
 
@@ -422,15 +420,15 @@ public class FamilyGraph {
      * @param relationLevel
      * @return
      */
-    public Collection<Person> getAllPersonsByRelation(Person person, ISpecificRelation specificRelation, int
+    public Collection<Person> getAllPersonsByRelation(Person person, SpecificRelation specificRelation, int
             relationLevel) {
         return this.getAllPersonsByRelation(person, specificRelation.getGenericRelation(), specificRelation
                 .isRelationMale(), relationLevel);
     }
 
-    private Collection<Person> getAllPersonsByRelation(Person person, IGenericRelation genericRelation,
+    private Collection<Person> getAllPersonsByRelation(Person person, GenericRelation genericRelation,
                                                        Boolean isRelationMale, int relationLevel) {
-        IGenericRelation reverseRelation = genericRelation.getReverseRelation();
+        GenericRelation reverseRelation = genericRelation.getReverseRelation();
         return filterConnectionsBySpecificRelation(reverseRelation, isRelationMale, -relationLevel,
                 getAllConnectionsInFamilyForPerson(person, false))
                 .stream()
@@ -438,29 +436,29 @@ public class FamilyGraph {
                 .collect(Collectors.toList());
     }
 
-    public boolean isPersonRelatedWithRelation(Person person, IRelation iRelation, int relationLevel) {
-        if (iRelation instanceof GenericRelation) {
-            return this.isPersonRelatedWithRelation(person, (GenericRelation) iRelation, relationLevel);
+    public boolean isPersonRelatedWithRelation(Person person, Relation relation, int relationLevel) {
+        if (relation instanceof GenericRelation) {
+            return this.isPersonRelatedWithRelation(person, (GenericRelation) relation, relationLevel);
         } else {
-            return this.isPersonRelatedWithRelation(person, (SpecificRelation) iRelation, relationLevel);
+            return this.isPersonRelatedWithRelation(person, (SpecificRelation) relation, relationLevel);
         }
     }
 
-    private boolean isPersonRelatedWithRelation(Person person, ISpecificRelation specificRelation, int relationLevel) {
+    private boolean isPersonRelatedWithRelation(Person person, SpecificRelation specificRelation, int relationLevel) {
         return this.isPersonRelatedWithRelation(person, specificRelation.getGenericRelation(),
                 specificRelation.isRelationMale(), relationLevel, getAllNeighbourConnections(person))
                 || this.isPersonRelatedWithRelation(person, specificRelation.getGenericRelation(),
                 specificRelation.isRelationMale(), relationLevel, getAllConnectionsInFamilyForPerson(person, false));
     }
 
-    private boolean isPersonRelatedWithRelation(Person person, IGenericRelation genericRelation, int relationLevel) {
+    private boolean isPersonRelatedWithRelation(Person person, GenericRelation genericRelation, int relationLevel) {
         return this.isPersonRelatedWithRelation(person, genericRelation, null, relationLevel,
                 getAllNeighbourConnections(person))
                 || this.isPersonRelatedWithRelation(person, genericRelation, null, relationLevel,
                 getAllConnectionsInFamilyForPerson(person, false));
     }
 
-    private boolean isPersonRelatedWithRelation(Person person, IGenericRelation genericRelation,
+    private boolean isPersonRelatedWithRelation(Person person, GenericRelation genericRelation,
                                                 Boolean isRelationMale, int relationLevel, Collection<ConnectionEdge> allConnections) {
         if (isRelationMale != null && person.isGenderMale() != isRelationMale) {
             return false;
