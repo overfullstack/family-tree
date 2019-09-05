@@ -2,7 +2,7 @@ package client;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import coreGraph.FamilyGraph;
+import core.FamilyGraph;
 import loader.LoaderService;
 import modules.FamilyModule;
 import printer.PrintService;

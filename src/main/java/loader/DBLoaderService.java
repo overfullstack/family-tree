@@ -1,6 +1,6 @@
 package loader;
 
-import coreGraph.FamilyGraph;
+import core.FamilyGraph;
 
 /**
  * Dummy Class for reading family from DB.

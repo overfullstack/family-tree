@@ -1,7 +1,7 @@
 package utils;
 
-import coreGraph.ConnectionEdge;
-import coreGraph.Person;
+import core.ConnectionEdge;
+import core.Person;
 import relationship.GenericRelation;
 
 import java.util.Collection;

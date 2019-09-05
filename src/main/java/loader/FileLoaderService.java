@@ -1,7 +1,7 @@
 package loader;
 
 import com.google.inject.Inject;
-import coreGraph.FamilyGraph;
+import core.FamilyGraph;
 import lombok.Cleanup;
 
 import javax.inject.Named;

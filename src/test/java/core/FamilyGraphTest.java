@@ -1,4 +1,4 @@
-package coreGraph;
+package core;
 
 import Software.SoftwareTest;
 import org.junit.jupiter.api.DisplayName;

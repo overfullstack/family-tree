@@ -1,8 +1,8 @@
 package printer;
 
 import com.google.inject.Inject;
-import coreGraph.FamilyGraph;
-import coreGraph.Person;
+import core.FamilyGraph;
+import core.Person;
 import lombok.Cleanup;
 import relationship.Relation;
 

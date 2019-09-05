@@ -1,4 +1,4 @@
-package coreGraph;
+package core;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

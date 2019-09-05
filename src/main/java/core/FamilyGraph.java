@@ -1,4 +1,4 @@
-package coreGraph;
+package core;
 
 import com.google.inject.Inject;
 import lombok.NonNull;

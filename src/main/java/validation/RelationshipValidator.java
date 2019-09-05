@@ -1,8 +1,8 @@
 package validation;
 
-import coreGraph.ConnectionEdge;
-import coreGraph.FamilyGraph;
-import coreGraph.Person;
+import core.ConnectionEdge;
+import core.FamilyGraph;
+import core.Person;
 import relationship.GenericRelation;
 import relationship.SpecificRelation;
 

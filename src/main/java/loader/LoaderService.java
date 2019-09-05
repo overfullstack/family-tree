@@ -1,6 +1,6 @@
 package loader;
 
-import coreGraph.FamilyGraph;
+import core.FamilyGraph;
 
 import java.io.IOException;
 

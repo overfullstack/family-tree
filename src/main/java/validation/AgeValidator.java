@@ -1,7 +1,7 @@
 package validation;
 
-import coreGraph.FamilyGraph;
-import coreGraph.Person;
+import core.FamilyGraph;
+import core.Person;
 import relationship.GenericRelation;
 import relationship.SpecificRelation;
 

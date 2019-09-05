@@ -1,7 +1,7 @@
 package validation;
 
 import Software.SoftwareTest;
-import coreGraph.Person;
+import core.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import relationship.GenericRelation;
