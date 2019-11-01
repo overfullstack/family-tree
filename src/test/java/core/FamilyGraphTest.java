@@ -5,10 +5,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import relationship.SpecificRelation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static relationship.SpecificRelation.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static relationship.SpecificRelation.AUNT;
+import static relationship.SpecificRelation.GRANDMOTHER;
+import static relationship.SpecificRelation.MOTHER;
 
 /**
  * Class to test Family graph
@@ -18,14 +29,14 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void addPerson() {
-        Person person = new Person("13", "Devil", 100, true);
+        var person = new Person("13", "Devil", 100, true);
         family.addPerson(person);
         assertEquals(person, family.getPersonById("13"));
     }
 
     @Test
     void addPerson1() {
-        Person person = new Person("13", "Devil", 100, true);
+        var person = new Person("13", "Devil", 100, true);
         family.addPerson("13", "Devil", "100", "true");
         assertEquals(person, family.getPersonById("13"));
     }
@@ -48,8 +59,8 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void removeDirectConnection() {
-        Person p1 = new Person("1", "Swathi", 23, false);
-        Person p2 = new Person("2", "Sai", 25, true);
+        var p1 = new Person("1", "Swathi", 23, false);
+        var p2 = new Person("2", "Sai", 25, true);
         family.removeDirectConnection(p1, p2);
         assertFalse(family.arePersonsDirectlyConnected(p1, p2));
     }
@@ -57,8 +68,8 @@ class FamilyGraphTest extends SoftwareTest {
     @Test
     void removeDirectConnectionNotConnected() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Person p1 = new Person("1", "Swathi", 23, false);
-            Person p2 = new Person("10", "Srinu", 35, true);
+            var p1 = new Person("1", "Swathi", 23, false);
+            var p2 = new Person("10", "Srinu", 35, true);
             family.removeDirectConnection(p1, p2);
         });
     }
@@ -70,7 +81,7 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void getConnection() {
-        Person origin = family.getPersonById("1");
+        var origin = family.getPersonById("1");
         List<ConnectionEdge> expectedConnections = new ArrayList<>();
 
         expectedConnections.add(new ConnectionEdge("1", "SISTER", "2", 0, family));
@@ -90,8 +101,8 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void getShortestRelationChain() {
-        Person p1 = new Person("1", "Swathi", 23, false);
-        Person p2 = new Person("10", "Srinu", 35, true);
+        var p1 = new Person("1", "Swathi", 23, false);
+        var p2 = new Person("10", "Srinu", 35, true);
         List<ConnectionEdge> expectedConnections = new ArrayList<>();
         expectedConnections.add(new ConnectionEdge("1", "DAUGHTER", "3", -1, family));
         expectedConnections.add(new ConnectionEdge("3", "BROTHER", "9", 0, family));
@@ -101,15 +112,15 @@ class FamilyGraphTest extends SoftwareTest {
 
     @Test
     void getAggregateRelation() {
-        Person p1 = new Person("6", "Pranavi", 1, false);
-        Person p2 = new Person("7", "Lakshmi", 108, false);
+        var p1 = new Person("6", "Pranavi", 1, false);
+        var p2 = new Person("7", "Lakshmi", 108, false);
         assertEquals(new ConnectionEdge("6", "GRANDDAUGHTER", "7", -4, family), family.getAggregateConnection(p1,
                 p2));
     }
 
     @Test
     void getAllMembersFromGenerationLevel() {
-        Person person = new Person("1", "Swathi", 23, false);
+        var person = new Person("1", "Swathi", 23, false);
         Set<ConnectionEdge> expectedConnections = new HashSet<>();
         expectedConnections.add(new ConnectionEdge("1", "DAUGHTER", "3", -1, family));
         expectedConnections.add(new ConnectionEdge("1", "DAUGHTER", "4", -1, family));
@@ -160,8 +171,8 @@ class FamilyGraphTest extends SoftwareTest {
      */
     @Test
     void getAllConnectionsInFamilyForPerson() {
-        Person origin = family.getPersonById("1");
-        for (ConnectionEdge connection : family.getAllConnectionsInFamilyForPerson(origin, false)) {
+        var origin = family.getPersonById("1");
+        for (var connection : family.getAllConnectionsInFamilyForPerson(origin, false)) {
             // Since getConnection is already tested, it can be relied on to test getAllConnectionsInFamilyForPerson
             assertEquals(family.getConnection(connection.from(), connection.to(), false), connection);
         }
@@ -187,8 +198,8 @@ class FamilyGraphTest extends SoftwareTest {
     @Test
     void batchConnectPersons() {
         Set<ConnectionEdge> connections = new HashSet<>();
-        Person p1 = family.getPersonById("1");
-        Person p2 = family.getPersonById("6");
+        var p1 = family.getPersonById("1");
+        var p2 = family.getPersonById("6");
         connections.add(new ConnectionEdge("1", "AUNT", "6", -1, family));
         family.batchConnectPersons(connections);
         assertEquals(MOTHER, family.getAggregateConnection(p1, p2).relation()

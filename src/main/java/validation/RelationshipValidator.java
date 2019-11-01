@@ -1,6 +1,5 @@
 package validation;
 
-import core.ConnectionEdge;
 import core.FamilyGraph;
 import core.Person;
 import relationship.GenericRelation;
@@ -20,7 +19,7 @@ public class RelationshipValidator implements Validator {
     @Override
     public boolean validate(Person p1, GenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
         // It's Ok to compare generic relations as it has already passed the gender validation.
-        ConnectionEdge possibleConnection = family.getConnection(p1, p2, false);
+        var possibleConnection = family.getConnection(p1, p2, false);
         boolean isValid;
         if (possibleConnection == null) {
             // Which means these two Persons are not connected at all, directly or indirectly.

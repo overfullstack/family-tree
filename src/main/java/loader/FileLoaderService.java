@@ -20,15 +20,15 @@ public class FileLoaderService implements LoaderService {
     
     @Override
     public void loadFamily(FamilyGraph family) throws IOException {
-        @Cleanup BufferedReader reader = new BufferedReader(new FileReader(new File(familyFile)));
+        @Cleanup var reader = new BufferedReader(new FileReader(new File(familyFile)));
         load(family, reader, true);
         load(family, reader, false);
     }
 
     private void load(FamilyGraph family, BufferedReader reader, boolean isLoadingPersons) throws IOException {
-        String line = reader.readLine();
+        var line = reader.readLine();
         while ((line != null) && (line.length() > 0)) {
-            String[] vals = line.split(",");
+            var vals = line.split(",");
             trimVals(vals);
             if (isLoadingPersons) {
                 family.addPerson(vals[0], vals[1], vals[2], vals[3]);
@@ -40,8 +40,8 @@ public class FileLoaderService implements LoaderService {
     }
 
     private void trimVals(String[] vals) {
-        int len = vals.length;
-        for (int i = 0; i < len; i++) {
+        var len = vals.length;
+        for (var i = 0; i < len; i++) {
             vals[i] = vals[i].trim();
         }
     }

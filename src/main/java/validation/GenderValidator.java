@@ -19,12 +19,10 @@ public class GenderValidator implements Validator {
     @Override
     public boolean validate(Person p1, GenericRelation genericRelation, Person p2, int relationLevel, FamilyGraph family) {
         boolean isValid;
-        switch (genericRelation) {
-            case SPOUSE:
-                isValid = (p1.isGenderMale() != p2.isGenderMale());
-                break;
-            default:
-                isValid = true;
+        if (genericRelation == GenericRelation.SPOUSE) {
+            isValid = (p1.isGenderMale() != p2.isGenderMale());
+        } else {
+            isValid = true;
         }
         return (nextValidator == null) ? isValid : isValid && nextValidator.validate(p1, genericRelation, p2, relationLevel,
                 family);
@@ -32,7 +30,7 @@ public class GenderValidator implements Validator {
 
     @Override
     public boolean validate(Person p1, SpecificRelation specificRelation, Person p2, int relationLevel, FamilyGraph family) {
-        boolean isValid = (specificRelation.isRelationMale() == p1.isGenderMale());
+        var isValid = (specificRelation.isRelationMale() == p1.isGenderMale());
 
         switch (specificRelation) {
             case HUSBAND:

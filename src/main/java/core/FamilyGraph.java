@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class FamilyGraph {
             throw new IllegalArgumentException("Person with Id: " + p2Id + " not found in family to connect");
         }
         // relation string parameter can either be generic or specific
-        GenericRelation GenericRelation = parseToGenericRelation(relation);
+        var GenericRelation = parseToGenericRelation(relation);
         connectPersons(p1, GenericRelation, p2, GenericRelation.getRelationLevel(), true);
     }
 
@@ -152,8 +151,8 @@ public class FamilyGraph {
         if (!arePersonsDirectlyConnected(p1, p2)) {
             throw new IllegalArgumentException(p1 + " is NOT directly connected to " + p2);
         }
-        for (Iterator<ConnectionEdge> iterator = getAllNeighbourConnections(p1).iterator(); iterator.hasNext(); ) {
-            ConnectionEdge connection = iterator.next();
+        for (var iterator = getAllNeighbourConnections(p1).iterator(); iterator.hasNext(); ) {
+            var connection = iterator.next();
             if (connection.to().equals(p2)) {
                 iterator.remove();
                 return;
@@ -169,7 +168,7 @@ public class FamilyGraph {
      * @return True if directly Connected
      */
     public boolean arePersonsDirectlyConnected(Person p1, Person p2) {
-        for (ConnectionEdge connection : getAllNeighbourConnections(p1)) {
+        for (var connection : getAllNeighbourConnections(p1)) {
             if (p2.equals(connection.to()))
                 return true;
         }
@@ -183,7 +182,7 @@ public class FamilyGraph {
      * @return Person with Id
      */
     public Person getPersonById(String pId) {
-        Person person = mPersonIdMap.get(pId);
+        var person = mPersonIdMap.get(pId);
         if (person == null) {
             throw new IllegalArgumentException("Person Id: " + pId + " NOT present in family");
         }
@@ -252,7 +251,7 @@ public class FamilyGraph {
         Person neighbourRelative;
         GenericRelation currentRelation, nextRelation;
 
-        boolean isGettingFamilyGraphForPerson = (p2 == null);
+        var isGettingFamilyGraphForPerson = (p2 == null);
         if (isGettingFamilyGraphForPerson && connectionsToPopulate == null) {
             connectionsToPopulate = new HashSet<>();
         }
@@ -261,8 +260,8 @@ public class FamilyGraph {
         visited.put(p1, true);
         loop:
         while (!queue.isEmpty()) {
-            Person p = queue.poll();
-            for (ConnectionEdge edge : getAllNeighbourConnections(p)) {
+            var p = queue.poll();
+            for (var edge : getAllNeighbourConnections(p)) {
                 if (visited.get(edge.to()) == null) {
                     neighbourRelative = edge.to();
                     previousConnection = relationMap.get(edge.from());
@@ -314,8 +313,8 @@ public class FamilyGraph {
         queue.add(p1);
         visited.put(p1, true);
         while (!queue.isEmpty()) {
-            Person p = queue.poll();
-            for (ConnectionEdge edge : getAllNeighbourConnections(p)) {
+            var p = queue.poll();
+            for (var edge : getAllNeighbourConnections(p)) {
                 if (visited.get(edge.to()) == null) {
                     Person neighbourRelative = edge.to();
                     connectionPathMap.put(neighbourRelative, edge);
@@ -353,7 +352,7 @@ public class FamilyGraph {
                                                                  Map<Person, ConnectionEdge> connectionPath, List<ConnectionEdge> connections) {
         ConnectionEdge nextEdge, aggregateConnection = null;
         GenericRelation nextRelation, aggregateRelation = null;
-        Person nextPerson = p2;
+        var nextPerson = p2;
 
         while (!nextPerson.equals(p1)) {
             nextEdge = connectionPath.get(nextPerson);
@@ -428,7 +427,7 @@ public class FamilyGraph {
 
     private Collection<Person> getAllPersonsByRelation(Person person, GenericRelation genericRelation,
                                                        Boolean isRelationMale, int relationLevel) {
-        GenericRelation reverseRelation = genericRelation.getReverseRelation();
+        var reverseRelation = genericRelation.getReverseRelation();
         return filterConnectionsBySpecificRelation(reverseRelation, isRelationMale, -relationLevel,
                 getAllConnectionsInFamilyForPerson(person, false))
                 .stream()
@@ -463,7 +462,7 @@ public class FamilyGraph {
         if (isRelationMale != null && person.isGenderMale() != isRelationMale) {
             return false;
         }
-        for (ConnectionEdge connection : allConnections) {
+        for (var connection : allConnections) {
             if (connection.relationLevel() == relationLevel && connection.relation().equals(genericRelation)) {
                 return true;
             }

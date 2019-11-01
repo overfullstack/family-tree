@@ -2,9 +2,7 @@ package printer;
 
 import com.google.inject.Inject;
 import core.FamilyGraph;
-import core.Person;
 import lombok.Cleanup;
-import relationship.Relation;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -26,16 +24,16 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printShortestRelationChain(String p1Id, String p2Id, FamilyGraph family) {
-        Person p1 = family.getPersonById(p1Id);
-        Person p2 = family.getPersonById(p2Id);
+        var p1 = family.getPersonById(p1Id);
+        var p2 = family.getPersonById(p2Id);
         printCollection(family.getShortestRelationChain(p1, p2));
     }
 
     @Override
     public void printAggregateRelation(String p1Id, String p2Id, FamilyGraph family) {
-        @Cleanup PrintStream printOut = new PrintStream(out);
-        Person p1 = family.getPersonById(p1Id);
-        Person p2 = family.getPersonById(p2Id);
+        @Cleanup var printOut = new PrintStream(out);
+        var p1 = family.getPersonById(p1Id);
+        var p2 = family.getPersonById(p2Id);
         printOut.println(family.getAggregateConnection(p1, p2));
     }
 
@@ -71,19 +69,19 @@ public class ConsolePrintService implements PrintService {
 
     @Override
     public void printPersonsByRelation(String pId, String relation, int relationLevel, FamilyGraph family) {
-        Relation iRelation = parseToRelation(relation);
+        var iRelation = parseToRelation(relation);
         printCollection(family.getAllPersonsByRelation(family.getPersonById(pId), iRelation, relationLevel));
     }
 
     @Override
     public void printPersonsRelatedWithRelation(String relation, int relationLevel, FamilyGraph family) {
-        @Cleanup PrintStream printOut = new PrintStream(out);
+        @Cleanup var printOut = new PrintStream(out);
         family.getAllPersonsInFamily().stream().filter(person -> family.isPersonRelatedWithRelation(person,
                 parseToRelation(relation), relationLevel)).forEach(printOut::println);
     }
 
     private <T> void printCollection(Collection<T> collection) {
-        @Cleanup PrintStream printOut = new PrintStream(out);
+        @Cleanup var printOut = new PrintStream(out);
         collection.forEach(printOut::println);
     }
 }

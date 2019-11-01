@@ -24,8 +24,8 @@ public class FamilyNetworkClient {
     public static void main(String[] args) throws IOException {
         Guice.createInjector(new FamilyModule());
         loader.loadFamily(family);
-        
-        Scanner scn = new Scanner(System.in);
+
+        var scn = new Scanner(System.in);
         System.out.println("Select option to Display: ");
         System.out.println("1. Family Tree\n2. Shortest Relation Chain\n3. Members from Generation Level\n" +
                 "4. Family Members in Ascending order of Age\n5. Family Members in Descending order of Age\n" +
@@ -69,31 +69,31 @@ public class FamilyNetworkClient {
     }
 
     private static void displayPersonsRelatedWithRelation() {
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Enter Relation RelationLevel: ");
-        String relation = scn.next();
-        int relationLevel = scn.nextInt();
+        var relation = scn.next();
+        var relationLevel = scn.nextInt();
         printer.printPersonsRelatedWithRelation(relation, relationLevel, family);
         pause();
     }
 
     private static void displayPersonsByRelation() {
         printer.printAllPersonsInFamily(family);
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Enter Id Relation RelationLevel: ");
-        String pId = scn.next();
-        String relation = scn.next();
-        int relationLevel = scn.nextInt();
+        var pId = scn.next();
+        var relation = scn.next();
+        var relationLevel = scn.nextInt();
         printer.printPersonsByRelation(pId, relation, relationLevel, family);
         pause();
     }
 
     private static void displayAggregateRelation() {
         printer.printAllPersonsInFamily(family);
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Enter Ids of Persons to print Aggregate relation between them: ");
-        String p1Id = scn.next();
-        String p2Id = scn.next();
+        var p1Id = scn.next();
+        var p2Id = scn.next();
         printer.printAggregateRelation(p1Id, p2Id, family);
         pause();
     }
@@ -124,37 +124,37 @@ public class FamilyNetworkClient {
 
     private static void displayAllMembersFromGenerationLevel() {
         printer.printAllPersonsInFamily(family);
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Enter Id of Person and Generation Level to Print all members above/below that Generation:");
-        String pId = scn.next();
-        int generationLevel = scn.nextInt();
+        var pId = scn.next();
+        var generationLevel = scn.nextInt();
         printer.printAllMembersFromGenerationLevel(pId, generationLevel, family);
         pause();
     }
 
     private static void displayShortestRelationChain() {
         printer.printAllPersonsInFamily(family);
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Enter Ids of Persons to check to Print Relation Chain: ");
-        String p1Id = scn.next();
-        String p2Id = scn.next();
+        var p1Id = scn.next();
+        var p2Id = scn.next();
         printer.printShortestRelationChain(p1Id, p2Id, family);
         pause();
     }
 
     private static void displayFamilyTree() {
         printer.printAllPersonsInFamily(family);
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
         System.out.println("Choose an Id to Print Family tree: ");
-        String pId = scn.next();
+        var pId = scn.next();
         printer.printFamilyTree(pId, family);
         pause();
     }
 
     private static void pause() {
         System.out.println("Move On? :(y/n)");
-        Scanner scn = new Scanner(System.in);
-        String inp = scn.next();
+        var scn = new Scanner(System.in);
+        var inp = scn.next();
         switch (inp) {
             case "n":
             case "N":
