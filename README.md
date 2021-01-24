@@ -1,4 +1,4 @@
-# Family Tree (Spicy)
+# Family Tree
 ### Features
 1.  Display Family Tree
 2.  Display Shortest Relation Chain
